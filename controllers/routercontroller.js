@@ -98,4 +98,46 @@ try {
 };
 
 
-const StatusDoctor = 
+const StatusDoctor = async(req,res,next)=>{
+    try {
+        const {isActive} = req.body;
+        const doctor = await Doctor.findByIdAndUpdate(
+            req.params.id,{isActive},{
+                new:true,
+                runValidators:true
+            }
+        );
+        if(!doctor){
+            return res.return(403).json({
+                success:true,
+                message:"Doctor Status updated",
+                data:doctor
+            });
+        }
+    } catch (error) {
+        next(error);
+    }
+}
+
+const getAllappointments=async(req,res, next)=>{
+    try {
+        const{id}  =req.params;
+        const appointments = Appointment.find({
+            doctor = id
+        }
+        ).populate("patient", "name age phone gender").sort({
+            appointmentDate : 1,
+            appointmentTime: 1
+        });
+        res.json({
+            success:true,
+            count: appointments.length,
+            data:appointments
+        })
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = {getdoctor, getAllappointments, getsingledoctor ,updateDoctor ,Createdoctor};
