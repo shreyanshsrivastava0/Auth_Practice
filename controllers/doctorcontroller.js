@@ -140,4 +140,4 @@ const getAllappointments=async(req,res, next)=>{
     }
 }
 
-module.exports = {getdoctor, getAllappointments, getsingledoctor ,updateDoctor ,Createdoctor};
+module.exports = {getdoctor, getAllappointments, getsingledoctor ,updateDoctor ,Createdoctor , StatusDoctor};
